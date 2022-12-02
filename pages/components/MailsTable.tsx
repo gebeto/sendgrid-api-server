@@ -46,9 +46,6 @@ export const Table = () => {
   );
   const [selectedItems, setSelectedItems] = React.useState<Mail[]>([]);
 
-  // if (typeof window === "undefined") return null;
-  // const [selectedItems, setSelectedItems] = React.useState<Mail[]>([]);
-
   const getRowProps = (item: Mail) => {
     const { id } = item;
     return {
