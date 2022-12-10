@@ -28,7 +28,7 @@ export default function Home() {
         <MailView mail={selectedMail} />
       </EuiPageTemplate.Sidebar>
       <EuiPageTemplate.Header>
-        <EuiTitle size="m">
+        <EuiTitle size="l">
           <strong>SendGrid API Server</strong>
         </EuiTitle>
       </EuiPageTemplate.Header>
