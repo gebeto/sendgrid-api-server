@@ -11,33 +11,64 @@ import {
 
 export type Mail = {
   id: string;
+  subject: string;
   datetime: string;
   receiver: string;
   sender: string;
+  data: any;
+};
+
+const mockData = {
+  from: {
+    planning: -782978870,
+    discussion: {
+      wood: "crack",
+      flow: 655207490.5183449,
+      southern: 1399945639.4572515,
+      dirty: 1339074916,
+      sang: 438558442,
+      swim: "shake",
+    },
+    sudden: "bowl",
+    soft: 629552217.8989129,
+    reach: "office",
+    mental: false,
+  },
+  progress: true,
+  per: 317933302,
+  describe: "oldest",
+  soil: "chosen",
+  carefully: false,
 };
 
 export const mails: Mail[] = [
   {
     id: "1",
-    datetime: "2022-09-12T12:00:00+00:00",
+    subject: "Subject 1",
+    datetime: "2022-09-12T14:12:00+00:00",
     receiver: "receiver@test.com",
     sender: "sender@test.com",
+    data: mockData,
   },
   {
     id: "2",
-    datetime: "2022-09-12T12:00:00+00:00",
+    subject: "Subject 2",
+    datetime: "2022-09-12T13:00:00+00:00",
     receiver: "receiver@test.com",
     sender: "sender@test.com",
+    data: mockData,
   },
   {
     id: "3",
+    subject: "Subject 3",
     datetime: "2022-09-12T12:00:00+00:00",
     receiver: "receiver@test.com",
     sender: "sender@test.com",
+    data: mockData,
   },
 ];
 
-export const Table = () => {
+export const Table: React.FC<any> = ({ onSelectMail }) => {
   const [pageIndex, setPageIndex] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(5);
   const [sortField, setSortField] = React.useState<keyof Mail>("datetime");
@@ -51,7 +82,9 @@ export const Table = () => {
     return {
       "data-test-subj": `row-${id}`,
       className: "customRowClass",
-      onClick: () => {},
+      onClick: () => {
+        onSelectMail?.(item);
+      },
     };
   };
 
@@ -106,7 +139,7 @@ export const Table = () => {
         selectable: () => true,
         onSelectionChange: setSelectedItems,
       }}
-      onChange={(data) => {
+      onChange={(data: any) => {
         setPageIndex(data.page?.index ?? 0);
         setPageSize(data.page?.size ?? 5);
         setSortField(data.sort?.field ?? "datetime");
