@@ -19,7 +19,7 @@ export type MailViewProps = {
 
 export const MailView: React.FC<MailViewProps> = (props) => {
   const data = React.useMemo(
-    () => JSON.stringify(props.mail, undefined, 4),
+    () => JSON.stringify(props.mail?.data ?? {}, undefined, 4),
     [props.mail]
   );
 
@@ -37,6 +37,10 @@ export const MailView: React.FC<MailViewProps> = (props) => {
       </EuiFlexItem>
       <EuiFlexItem style={{ maxWidth: "300px" }}>
         <EuiDescriptionList textStyle="reverse" type="column">
+          <EuiDescriptionListTitle>Template ID</EuiDescriptionListTitle>
+          <EuiDescriptionListDescription>
+            {props.mail.template_id ?? "-"}
+          </EuiDescriptionListDescription>
           <EuiDescriptionListTitle>Sender</EuiDescriptionListTitle>
           <EuiDescriptionListDescription>
             {props.mail.sender}

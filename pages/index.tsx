@@ -1,14 +1,14 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { EuiPageTemplate, EuiTitle, EuiLoadingSpinner } from "@elastic/eui";
-import { Mail, Table } from "./components/MailsTable";
+import { Mail, MailTable, MailTableProps } from "./components/MailsTable";
 import { MailView } from "./components/MailView";
 
-const DynamicComponentWithNoSSR = dynamic<any>(
+const DynamicComponentWithNoSSR = dynamic(
   () => {
-    return new Promise<React.ComponentType>((resolve) => {
+    return new Promise<React.ComponentType<MailTableProps>>((resolve) => {
       setTimeout(() => {
-        resolve(Table);
+        resolve(MailTable);
       }, 0);
     });
   },
@@ -19,6 +19,7 @@ const DynamicComponentWithNoSSR = dynamic<any>(
 
 export default function Home() {
   const [selectedMail, setSelectedMail] = React.useState<Mail>();
+
   return (
     <EuiPageTemplate
       restrictWidth={false}

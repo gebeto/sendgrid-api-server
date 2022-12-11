@@ -15,6 +15,7 @@ export type Mail = {
   datetime: string;
   receiver: string;
   sender: string;
+  template_id?: string;
   data: any;
 };
 
@@ -68,14 +69,30 @@ export const mails: Mail[] = [
   },
 ];
 
-export const Table: React.FC<any> = ({ onSelectMail }) => {
-  const [pageIndex, setPageIndex] = React.useState(0);
-  const [pageSize, setPageSize] = React.useState(5);
+export type MailTableProps = {
+  mails?: Mail[];
+  onSelectMail: (mail: Mail) => void;
+};
+
+export const MailTable: React.FC<MailTableProps> = ({
+  onSelectMail,
+  ...props
+}) => {
   const [sortField, setSortField] = React.useState<keyof Mail>("datetime");
   const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">(
     "desc"
   );
   const [selectedItems, setSelectedItems] = React.useState<Mail[]>([]);
+
+  const [mails, setMails] = React.useState<Mail[]>([]);
+
+  React.useEffect(() => {
+    fetch("/api/mails")
+      .then((res) => res.json() as Promise<{ mails: Mail[] }>)
+      .then((res) => {
+        setMails(res.mails);
+      });
+  }, []);
 
   const getRowProps = (item: Mail) => {
     const { id } = item;
@@ -91,18 +108,13 @@ export const Table: React.FC<any> = ({ onSelectMail }) => {
   return (
     <EuiBasicTable
       tableCaption="Mails"
-      items={mails}
+      items={props.mails || mails}
       rowHeader="firstName"
       sorting={{
         sort: {
           field: sortField,
           direction: sortDirection,
         },
-      }}
-      pagination={{
-        totalItemCount: mails.length ?? 0,
-        pageIndex: pageIndex,
-        pageSize: pageSize,
       }}
       columns={[
         {
@@ -113,11 +125,6 @@ export const Table: React.FC<any> = ({ onSelectMail }) => {
           render: (date: string) => formatDate(date, "dateTime"),
         },
         {
-          field: "sender",
-          name: "From",
-          render: (sender: string) => <EuiText>{sender}</EuiText>,
-        },
-        {
           field: "subject",
           name: "Subject",
           render: (receiver: string) => <EuiText>{receiver}</EuiText>,
@@ -126,6 +133,11 @@ export const Table: React.FC<any> = ({ onSelectMail }) => {
           field: "receiver",
           name: "Receiver",
           render: (receiver: string) => <EuiText>{receiver}</EuiText>,
+        },
+        {
+          field: "sender",
+          name: "From",
+          render: (sender: string) => <EuiText>{sender}</EuiText>,
         },
         {
           render: () => {
@@ -140,8 +152,6 @@ export const Table: React.FC<any> = ({ onSelectMail }) => {
         onSelectionChange: setSelectedItems,
       }}
       onChange={(data: any) => {
-        setPageIndex(data.page?.index ?? 0);
-        setPageSize(data.page?.size ?? 5);
         setSortField(data.sort?.field ?? "datetime");
         setSortDirection(data.sort?.direction ?? "desc");
       }}
