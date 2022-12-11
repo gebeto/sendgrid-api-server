@@ -2,7 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Mail } from "../components/MailsTable";
 
 type Data = {
-  mails: Mail[];
+  ok?: boolean;
+  mails?: Mail[];
 };
 
 export const mails: Mail[] = [];
@@ -23,11 +24,11 @@ export default function handler(
       template_id: req.body.template_id,
       data: req.body.personalizations[0].dynamic_template_data,
     });
-    res.status(202).send("");
+    res.status(202).json({ ok: true });
     return;
   } else if (req.method === "GET") {
     res.json({ mails });
   }
 
-  res.status(403);
+  res.status(403).json({ ok: true });
 }
