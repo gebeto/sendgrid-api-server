@@ -144,7 +144,7 @@ export const MailTable: React.FC<MailTableProps> = ({
         },
         {
           render: () => {
-            return <EuiText>Actions</EuiText>;
+            return <EuiText />;
           },
         },
       ]}

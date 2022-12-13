@@ -22,10 +22,9 @@ export default function Home() {
 
   return (
     <EuiPageTemplate
-      restrictWidth={false}
       style={{ flexDirection: "row-reverse", boxShadow: "none" }}
     >
-      <EuiPageTemplate.Sidebar sticky={true} minWidth="40%">
+      <EuiPageTemplate.Sidebar sticky={true} minWidth="45%">
         <MailView mail={selectedMail} />
       </EuiPageTemplate.Sidebar>
       <EuiPageTemplate.Header>
