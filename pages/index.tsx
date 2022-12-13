@@ -23,9 +23,9 @@ export default function Home() {
   return (
     <EuiPageTemplate
       restrictWidth={false}
-      style={{ flexDirection: "row-reverse" }}
+      style={{ flexDirection: "row-reverse", boxShadow: "none" }}
     >
-      <EuiPageTemplate.Sidebar sticky={true} minWidth="50%">
+      <EuiPageTemplate.Sidebar sticky={true} minWidth="40%">
         <MailView mail={selectedMail} />
       </EuiPageTemplate.Sidebar>
       <EuiPageTemplate.Header>
@@ -33,9 +33,12 @@ export default function Home() {
           <strong>SendGrid API Server</strong>
         </EuiTitle>
       </EuiPageTemplate.Header>
-      <EuiPageTemplate.Section>
+      <EuiPageTemplate.Section style={{ paddingRight: 0 }}>
         <React.Suspense fallback={<EuiLoadingSpinner size="xxl" />}>
-          <DynamicComponentWithNoSSR onSelectMail={setSelectedMail} />
+          <DynamicComponentWithNoSSR
+            selectedMail={selectedMail}
+            onSelectMail={setSelectedMail}
+          />
         </React.Suspense>
       </EuiPageTemplate.Section>
     </EuiPageTemplate>

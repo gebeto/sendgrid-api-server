@@ -71,11 +71,13 @@ export const mails: Mail[] = [
 
 export type MailTableProps = {
   mails?: Mail[];
+  selectedMail?: Mail;
   onSelectMail: (mail: Mail) => void;
 };
 
 export const MailTable: React.FC<MailTableProps> = ({
   onSelectMail,
+  selectedMail,
   ...props
 }) => {
   const [sortField, setSortField] = React.useState<keyof Mail>("datetime");
@@ -99,6 +101,7 @@ export const MailTable: React.FC<MailTableProps> = ({
     return {
       "data-test-subj": `row-${id}`,
       className: "customRowClass",
+      style: selectedMail?.id === id ? { background: "#f7f8fc" } : undefined,
       onClick: () => {
         onSelectMail?.(item);
       },

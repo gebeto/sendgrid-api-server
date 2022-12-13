@@ -6,7 +6,28 @@ type Data = {
   mails?: Mail[];
 };
 
-export const mails: Mail[] = [];
+export const mails: Mail[] = [
+  {
+    id: "1",
+    subject: "Subject test 1",
+    sender: "asdadad@asdasd.asd",
+    receiver: "asdadad@asdasd.asd",
+    datetime: "2022-09-12T12:00:00+00:00",
+    data: {
+      test: 1,
+    },
+  },
+  {
+    id: "2",
+    subject: "Subject test 2",
+    sender: "asdadad@asdasd.asd",
+    receiver: "asdadad@asdasd.asd",
+    datetime: "2022-09-12T12:00:00+00:00",
+    data: {
+      test: 2,
+    },
+  },
+];
 
 export default function handler(
   req: NextApiRequest,
